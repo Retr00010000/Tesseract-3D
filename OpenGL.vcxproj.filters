@@ -90,5 +90,11 @@
     <Image Include="checkerboard.png">
       <Filter>Resource Files\Textures</Filter>
     </Image>
+    <Image Include="Space.png">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="Tess.png">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>
