@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\AnimatedGifTexture.cpp" />
     <ClCompile Include="source\Application.cpp" />
     <ClCompile Include="source\EBO.cpp" />
     <ClCompile Include="source\glad.c" />
@@ -162,6 +163,7 @@
     <None Include="snake.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\AnimatedGifTexture.h" />
     <ClInclude Include="source\EBO.h" />
     <ClInclude Include="source\shaderClass.h" />
     <ClInclude Include="source\Texture.h" />

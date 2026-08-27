@@ -48,6 +48,9 @@
     <ClCompile Include="source\Snake.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\AnimatedGifTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="default.vert">
@@ -77,6 +80,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Texture.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AnimatedGifTexture.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
