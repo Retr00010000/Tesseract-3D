@@ -13,8 +13,9 @@ An interactive, real-time 3D simulation of a rotating Tesseract hypercube engine
 
 ## 📸 In-Game Preview
 
+
 <p align="center">
-  <img src="assets/gameplay.png" alt="Tesseract 3D Gameplay Preview" width="600" />
+  <img width="792" height="790" alt="Screenshot 2026-10-07 220836" src="https://github.com/user-attachments/assets/fff03aa1-050b-4ec0-91ea-8dce766f210c" />
 </p>
 
 *Real-time interactive 3D Tesseract hypercube rendered in OpenGL Core Profile with dynamic animated GIF cube texturing, responsive mouse dragging, and deep-space cosmic background.*
