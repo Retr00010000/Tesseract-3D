@@ -57,17 +57,34 @@ An interactive, real-time 3D simulation of a rotating Tesseract hypercube engine
   * Applied seamlessly to both the rotating **Tesseract cube** (`assets/textures/Tess.gif`) and the **cosmic backdrop** (`assets/textures/space.gif`).
 
 ### 3. 📐 Mathematical Projection & 3D Matrices (GLM)
-* **Model Matrix ($M$):**
-  Combines user-interactive pitch and yaw rotations derived from mouse drag delta offsets with the continuous automatic spin:
-  $$\mathbf{M} = \mathbf{R}_{\text{auto}}(\theta_{\text{auto}}, (0.5, 1, 0)) \times \mathbf{R}_y(\theta_{\text{yaw}}) \times \mathbf{R}_x(\theta_{\text{pitch}})$$
-* **View Matrix ($V$):**
-  Sets the virtual camera at $(0.0, 0.0, -2.5)$ using `glm::translate`.
-* **Projection Matrix ($P$):**
-  Applies perspective projection with a $45^\circ$ Field of View (FOV), 1:1 aspect ratio ($800 \times 800$), a near clipping plane of $0.1$, and a far clipping plane of $100.0$:
-  $$\mathbf{P} = \text{glm::perspective}(\text{radians}(45.0^\circ), 1.0, 0.1, 100.0)$$
-* **GLSL Shader Pipeline:**
-  The vertex shader (`default.vert`) multiplies the vertex positions by the MVP matrix product:
-  $$\mathbf{v}_{\text{clip}} = \mathbf{P} \times \mathbf{V} \times \mathbf{M} \times \begin{bmatrix} x \\ y \\ z \\ 1 \end{bmatrix}$$
+
+#### **Model Matrix ($M$)**
+Combines user-interactive pitch and yaw rotations derived from mouse drag delta offsets with the continuous automatic gyroscopic spin:
+
+```math
+\mathbf{M} = \mathbf{R}_{\text{auto}}(\theta_{\text{auto}}, (0.5, 1.0, 0.0)) \times \mathbf{R}_y(\theta_{\text{yaw}}) \times \mathbf{R}_x(\theta_{\text{pitch}})
+```
+
+#### **View Matrix ($V$)**
+Positions the virtual camera back along the Z-axis at $(0.0, 0.0, -2.5)$ using `glm::translate`:
+
+```math
+\mathbf{V} = \text{glm::translate}(\mathbf{I}, (0.0, 0.0, -2.5))
+```
+
+#### **Projection Matrix ($P$)**
+Applies perspective projection with a $45^\circ$ Field of View (FOV), 1:1 aspect ratio ($800 \times 800$), a near clipping plane of $0.1$, and a far clipping plane of $100.0$:
+
+```math
+\mathbf{P} = \text{glm::perspective}(\text{radians}(45.0^\circ), 1.0, 0.1, 100.0)
+```
+
+#### **GLSL Shader Pipeline**
+The vertex shader ([`default.vert`](assets/shaders/default.vert)) multiplies object-space vertex positions by the Model-View-Projection (MVP) matrix product to compute clip-space coordinates:
+
+```math
+\mathbf{v}_{\text{clip}} = \mathbf{P} \times \mathbf{V} \times \mathbf{M} \times \begin{bmatrix} x \\ y \\ z \\ 1.0 \end{bmatrix}
+```
 
 ---
 
@@ -207,9 +224,9 @@ If the project has already been built:
 
 * **Windows Smart App Control (SAC) / Defender Notice:**
   On modern Windows 11 systems, Smart App Control or local execution policies may block freshly compiled, unsigned `.exe` files. If blocked:
-  1. Open **Windows Settings** $\rightarrow$ **Privacy & Security** $\rightarrow$ **Windows Security**.
-  2. Click **App & browser control** $\rightarrow$ **Smart App Control settings**.
-  3. Set to **Off** or enable **Developer Mode** in **System $\rightarrow$ For Developers**.
+  1. Open **Windows Settings** → **Privacy & Security** → **Windows Security**.
+  2. Click **App & browser control** → **Smart App Control settings**.
+  3. Set to **Off** or enable **Developer Mode** in **System → For Developers**.
 * **Missing Assets / Textures at Launch:**
   The application includes a smart path resolver in `AnimatedGifTexture` and `ShaderClass` that automatically searches `./assets/`, `../assets/`, and subfolders. Always ensure `assets/` is present either in the project root or copied alongside the executable in `Debug/`.
 * **Header Ordering Notice:**
