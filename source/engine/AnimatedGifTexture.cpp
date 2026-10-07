@@ -5,7 +5,26 @@
 
 AnimatedGifTexture::AnimatedGifTexture(const char* filePath)
 {
-	std::ifstream file(filePath, std::ios::binary | std::ios::ate);
+	std::string candidates[] = {
+		filePath,
+		std::string("assets/textures/") + filePath,
+		std::string("../assets/textures/") + filePath,
+		std::string("assets/") + filePath,
+		std::string("../assets/") + filePath
+	};
+
+	std::ifstream file;
+	std::string resolvedPath = filePath;
+	for (const auto& path : candidates)
+	{
+		file.open(path, std::ios::binary | std::ios::ate);
+		if (file.is_open())
+		{
+			resolvedPath = path;
+			break;
+		}
+	}
+
 	if (!file.is_open())
 	{
 		std::cout << "Failed to open GIF file: " << filePath << std::endl;

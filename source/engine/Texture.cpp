@@ -9,8 +9,26 @@ Texture::Texture(const char* image, GLenum texType, GLenum slot, GLenum format, 
 	int widthImg, heightImg, numColCh;
 	// Flips the image so it appears right side up
 	stbi_set_flip_vertically_on_load(true);
-	// Reads the image from a file and stores it in bytes (forcing 4 channels for RGBA)
-	unsigned char* bytes = stbi_load(image, &widthImg, &heightImg, &numColCh, 4);
+
+	std::string candidates[] = {
+		image,
+		std::string("assets/textures/") + image,
+		std::string("../assets/textures/") + image,
+		std::string("assets/") + image,
+		std::string("../assets/") + image
+	};
+
+	unsigned char* bytes = nullptr;
+	std::string resolvedPath = image;
+	for (const auto& path : candidates)
+	{
+		bytes = stbi_load(path.c_str(), &widthImg, &heightImg, &numColCh, 4);
+		if (bytes)
+		{
+			resolvedPath = path;
+			break;
+		}
+	}
 
 	if (!bytes)
 	{

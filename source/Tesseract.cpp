@@ -118,7 +118,7 @@ int main()
 	glViewport(0, 0, width, height);
 
 	// Shader Program
-	Shader shaderProgram("default.vert", "default.frag");
+	Shader shaderProgram("assets/shaders/default.vert", "assets/shaders/default.frag");
 
 	// 3D Cube VAO, VBO, EBO
 	VAO VAO1;
@@ -148,12 +148,11 @@ int main()
 
 	GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
 
-	// Space Background Texture
-	Texture spaceTex("Space.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
-	spaceTex.texUnit(shaderProgram, "tex0", 0);
+	// Space Background Animated GIF Texture
+	AnimatedGifTexture spaceTex("assets/textures/space.gif");
 
 	// Animated GIF Texture for the Cube
-	AnimatedGifTexture cubeGif("Tess.gif");
+	AnimatedGifTexture cubeGif("assets/textures/Tess.gif");
 
 	// Variables for Rotation & Mouse Interaction
 	float autoRotation = 0.0f;
@@ -187,7 +186,7 @@ int main()
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(identity));
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(identity));
 
-		spaceTex.Bind();
+		spaceTex.Bind(glfwGetTime(), GL_TEXTURE0);
 		bgVAO.Bind();
 		glDrawElements(GL_TRIANGLES, sizeof(bgIndices) / sizeof(int), GL_UNSIGNED_INT, 0);
 

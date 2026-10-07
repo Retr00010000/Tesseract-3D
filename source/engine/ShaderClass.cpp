@@ -3,17 +3,30 @@
 // Reads a text file and outputs a string with everything in the text file
 std::string get_file_contents(const char* filename)
 {
-	std::ifstream in(filename, std::ios::binary);
-	if (in)
+	std::string candidates[] = {
+		filename,
+		std::string("assets/shaders/") + filename,
+		std::string("../assets/shaders/") + filename,
+		std::string("assets/") + filename,
+		std::string("../assets/") + filename
+	};
+
+	for (const auto& path : candidates)
 	{
-		std::string contents;
-		in.seekg(0, std::ios::end);
-		contents.resize(static_cast<size_t>(in.tellg()));
-		in.seekg(0, std::ios::beg);
-		in.read(&contents[0], contents.size());
-		in.close();
-		return(contents);
+		std::ifstream in(path, std::ios::binary);
+		if (in.is_open())
+		{
+			std::string contents;
+			in.seekg(0, std::ios::end);
+			contents.resize(static_cast<size_t>(in.tellg()));
+			in.seekg(0, std::ios::beg);
+			in.read(&contents[0], contents.size());
+			in.close();
+			return contents;
+		}
 	}
+
+	std::cout << "Failed to open shader file: " << filename << std::endl;
 	throw(errno);
 }
 
